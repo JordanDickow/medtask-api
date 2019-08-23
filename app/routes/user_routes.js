@@ -38,6 +38,7 @@ router.post('/sign-up', (req, res, next) => {
       if (!credentials ||
           !credentials.password ||
           credentials.password !== credentials.password_confirmation) {
+        console.log("you've reached the error")
         throw new BadParamsError()
       }
     })

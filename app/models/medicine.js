@@ -6,13 +6,17 @@ const medicineSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  dotor: {
+  doctor: {
     type: String,
     required: true
   },
   prescribed: {
     type: Date,
     required: true
+  },
+  dueDate: {
+    type: Date,
+    requried: true
   },
   owner: {
     type: mongoose.Schema.Types.ObjectId,
