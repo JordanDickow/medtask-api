@@ -7,7 +7,7 @@ const passport = require('passport')
 const bcrypt = require('bcrypt')
 
 // see above for explanation of "salting", 10 rounds is recommended
-const bcryptSaltRounds = 10
+const bcryptSaltRounds = 5
 
 // pull in error types and the logic to handle them and set status codes
 const errors = require('../../lib/custom_errors')

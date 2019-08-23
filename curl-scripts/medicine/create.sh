@@ -1,7 +1,7 @@
 #!/bin/bash
 
 API="http://localhost:4741"
-URL_PATH="/examples"
+URL_PATH="/medicines"
 
 curl "${API}${URL_PATH}" \
   --include \
@@ -10,10 +10,11 @@ curl "${API}${URL_PATH}" \
   --header "Authorization: Bearer ${TOKEN}" \
   --data '{
     "medicine": {
-      "name": "'"${TEXT}"'",
+      "name": "'"${NAME}"'",
       "doctor": "'"${DOCTOR}"'",
-      "prescribed": "'"${TITLE}"'",
-        "title": "'"${TITLE}"'",
+      "prescribed": "'"${PRESCRIBED}"'",
+        "description": "'"${DESCRIPTION}"'",
+          "dueDate": "'"${DUEDATE}"'"
 
     }
   }'

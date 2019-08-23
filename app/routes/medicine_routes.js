@@ -42,38 +42,58 @@ router.get('/medicines', requireToken, (req, res, next) => {
       // `activities` will be an array of Mongoose documents
       // we want to convert each one to a POJO, so we use `.map` to
       // apply `.toObject` to each one
-      return medicines.map(activity => activity.toObject())
+      return medicines.map(medicine => medicine.toObject())
     })
     // respond with status 200 and JSON of the activities
     .then(medicines => res.status(200).json({ medicines: medicines }))
     // if an error occurs, pass it to the handler
     .catch(next)
 })
-router.get('/activities/:id', requireToken, (req, res, next) => {
+// SHOW
+// GET /examples/5a7db6c74d55bc51bdf39793
+router.get('/medicines/:id', requireToken, (req, res, next) => {
+  // req.params.id will be set based on the `:id` in the route
   Medicine.findById(req.params.id)
     .then(handle404)
+    // if `findById` is succesful, respond with 200 and "example" JSON
     .then(medicine => res.status(200).json({ medicine: medicine.toObject() }))
+    // if an error occurs, pass it to the handler
     .catch(next)
 })
-router.patch('/medicines/:id', requireToken, removeBlanks, (res, req, next) => {
+router.patch('/medicines/:id', requireToken, removeBlanks, (req, res, next) => {
+  // if the client attempts to change the `owner` property by including a new
+  // owner, prevent that by deleting that key/value pair
   delete req.body.medicine.owner
+
   Medicine.findById(req.params.id)
     .then(handle404)
     .then(medicine => {
+      // pass the `req` object and the Mongoose record to `requireOwnership`
+      // it will throw an error if the current user isn't the owner
       requireOwnership(req, medicine)
+
+      // pass the result of Mongoose's `.update` to the next `.then`
       return medicine.update(req.body.medicine)
     })
+    // if that succeeded, return 204 and no JSON
     .then(() => res.sendStatus(204))
+    // if an error occurs, pass it to the handler
     .catch(next)
 })
+// DESTROY
+// DELETE /examples/5a7db6c74d55bc51bdf39793
 router.delete('/medicines/:id', requireToken, (req, res, next) => {
-  Medicine.FindById(req.params.id)
+  Medicine.findById(req.params.id)
     .then(handle404)
     .then(medicine => {
+      // throw an error if current user doesn't own `example`
       requireOwnership(req, medicine)
+      // delete the example ONLY IF the above didn't throw
       medicine.remove()
     })
-    .then(() => res.senStatus(204))
+    // send back 204 and no content if the deletion succeeded
+    .then(() => res.sendStatus(204))
+    // if an error occurs, pass it to the handler
     .catch(next)
 })
 
