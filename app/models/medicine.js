@@ -15,7 +15,7 @@ const medicineSchema = new mongoose.Schema({
     required: true
   },
   owner: {
-    type: mongoose.Schema.Types.ObjectID,
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
   }

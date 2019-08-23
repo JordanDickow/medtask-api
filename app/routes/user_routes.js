@@ -140,7 +140,7 @@ router.delete('/sign-out', requireToken, (req, res, next) => {
     .catch(next)
 })
 
-router.get('/users/:id', requireToken, (req, res, next) => {
+router.get('/users/:id', (req, res, next) => {
   // req.params.id will be set based on the `:id` in the route
   User.findById(req.params.id)
     .then(handle404)
