@@ -12,6 +12,8 @@ curl "${API}${URL_PATH}" \
     "medicine": {
       "name": "'"${TEXT}"'",
       "doctor": "'"${DOCTOR}"'",
+      "prescribed": "'"${TITLE}"'",
+        "title": "'"${TITLE}"'",
 
     }
   }'

@@ -14,6 +14,10 @@ const medicineSchema = new mongoose.Schema({
     type: Date,
     required: true
   },
+  description: {
+    type: String,
+    required: true
+  },
   dueDate: {
     type: Date,
     requried: true
